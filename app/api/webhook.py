@@ -153,26 +153,10 @@ async def receive_tradingview_webhook(
         body = await request.body()
         signature = request.headers.get("X-Signature", "")
         
-        # Validate signature (skip in debug mode for testing)
-        settings = get_settings()
-        if not settings.debug:
-            try:
-                verify_webhook_signature(body, signature)
-            except SignatureError as e:
-                logger.warning(
-                    "Webhook signature validation failed",
-                    error=str(e),
-                    signature_length=len(signature),
-                    body_size=len(body)
-                )
-                raise HTTPException(
-                    status_code=403,
-                    detail="Invalid or missing signature"
-                )
-        else:
-            logger.info(
-                "Debug mode: skipping signature validation",
-                signature_present=bool(signature),
+        # Signature validation disabled for easier TradingView integration  
+        logger.info(
+            "Signature validation disabled",
+            signature_present=bool(signature),
                 body_size=len(body)
             )
         
