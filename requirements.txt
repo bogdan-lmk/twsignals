@@ -12,3 +12,6 @@ pydantic-settings>=2.1.0,<3.0.0
 # Structured logging
 structlog>=23.0.0,<24.0.0
 python-json-logger>=2.0.0,<3.0.0
+
+# Production server
+gunicorn>=21.0.0,<22.0.0

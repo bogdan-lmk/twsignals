@@ -34,7 +34,7 @@
    - **Environment**: Python 3
    - **Runtime**: Python 3.11.5 (если есть опция)
    - **Build Command**: `pip install --upgrade pip && pip install -r requirements.txt`
-   - **Start Command**: `python main.py`
+   - **Start Command**: `gunicorn --config gunicorn.conf.py app:app`
    - **Plan**: Free
 
 4. **Environment Variables:**
@@ -103,6 +103,16 @@ curl https://your-app-name.onrender.com/health
 2. Убедитесь, что Python версия 3.11.5
 3. Build Command: `pip install --upgrade pip && pip install -r requirements.txt`
 4. Manual Deploy → Clear build cache → Deploy
+
+### ❌ "gunicorn: command not found" ошибка:
+**Решение 1 (быстрое):**
+1. Settings → General → Start Command
+2. Измените на: `python main.py`
+3. Save Changes → Manual Deploy
+
+**Решение 2 (рекомендуемое):**
+1. Start Command: `gunicorn --config gunicorn.conf.py app:app`
+2. Manual Deploy (gunicorn уже добавлен в requirements)
 
 ### ❌ "Build failed" ошибка:
 1. Проверьте логи в Render Dashboard
