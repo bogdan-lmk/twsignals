@@ -34,7 +34,7 @@
    - **Environment**: Python 3
    - **Runtime**: Python 3.11.5 (если есть опция)
    - **Build Command**: `pip install --upgrade pip && pip install -r requirements.txt`
-   - **Start Command**: `gunicorn --config gunicorn.conf.py app:app`
+   - **Start Command**: `gunicorn app.main:app --bind 0.0.0.0:$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker`
    - **Plan**: Free
 
 4. **Environment Variables:**
@@ -111,7 +111,7 @@ curl https://your-app-name.onrender.com/health
 3. Save Changes → Manual Deploy
 
 **Решение 2 (рекомендуемое):**
-1. Start Command: `gunicorn --config gunicorn.conf.py app:app`
+1. Start Command: `gunicorn app.main:app --bind 0.0.0.0:$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker`
 2. Manual Deploy (gunicorn уже добавлен в requirements)
 
 ### ❌ "Build failed" ошибка:
