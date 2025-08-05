@@ -32,7 +32,8 @@
 3. **Настройки:**
    - **Name**: `twsignals-webhook-YOUR_NAME`
    - **Environment**: Python 3
-   - **Build Command**: `pip install -r requirements.txt`
+   - **Runtime**: Python 3.11.5 (если есть опция)
+   - **Build Command**: `pip install --upgrade pip && pip install -r requirements.txt`
    - **Start Command**: `python main.py`
    - **Plan**: Free
 
@@ -96,10 +97,17 @@ curl https://your-app-name.onrender.com/health
 
 ## 🆘 Если что-то не работает
 
-### Render.com показывает ошибку:
+### ❌ "metadata-generation-failed" ошибка:
+**Решение:**
+1. В Render → Settings → Environment
+2. Убедитесь, что Python версия 3.11.5
+3. Build Command: `pip install --upgrade pip && pip install -r requirements.txt`
+4. Manual Deploy → Clear build cache → Deploy
+
+### ❌ "Build failed" ошибка:
 1. Проверьте логи в Render Dashboard
 2. Убедитесь, что все Environment Variables добавлены
-3. Проверьте, что Build прошел успешно
+3. Попробуйте Manual Deploy
 
 ### TradingView не отправляет:
 1. Проверьте URL (должен содержать `/webhook`)
