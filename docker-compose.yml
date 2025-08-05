@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  webhook:
+    build: .
+    container_name: twsignals-webhook
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Application settings
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+      - HOST=0.0.0.0
+      - PORT=8000
+      
+      # TradingView webhook settings (set these in .env)
+      - TV_WEBHOOK_SECRET=${TV_WEBHOOK_SECRET}
+      
+      # Telegram Bot settings (set these in .env)
+      - TG_BOT_TOKEN=${TG_BOT_TOKEN}
+      - TG_CHAT_ID=${TG_CHAT_ID}
+      - TG_TIMEOUT=10
+      - TG_RETRY_ATTEMPTS=3
+      - TG_RETRY_DELAY=1.0
+      - TG_RETRY_BACKOFF=2.0
+      
+      # Performance settings
+      - WEBHOOK_TIMEOUT=0.15
+      - CACHE_TTL=300
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+        reservations:
+          memory: 128M
+          cpus: '0.25'
+    
+    # Security
+    security_opt:
+      - no-new-privileges:true
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
