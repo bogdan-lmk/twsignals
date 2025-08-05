@@ -44,7 +44,8 @@ class Settings(BaseSettings):
     # Security settings
     allowed_hosts: list[str] = Field(default=["*"], description="Allowed hosts for CORS")
     
-    @validator("log_level")
+    @field_validator("log_level")
+    @classmethod
     def validate_log_level(cls, v: str) -> str:
         """Validate log level."""
         valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -52,7 +53,8 @@ class Settings(BaseSettings):
             raise ValueError(f"Log level must be one of: {valid_levels}")
         return v.upper()
     
-    @validator("tg_chat_id")
+    @field_validator("tg_chat_id")
+    @classmethod
     def validate_chat_id(cls, v: str) -> str:
         """Validate Telegram chat ID format."""
         if not v:
@@ -62,7 +64,8 @@ class Settings(BaseSettings):
             raise ValueError("Chat ID must be numeric or start with @")
         return v
     
-    @validator("tg_retry_attempts")
+    @field_validator("tg_retry_attempts")
+    @classmethod
     def validate_retry_attempts(cls, v: int) -> int:
         """Validate retry attempts."""
         if v < 0 or v > 10:
